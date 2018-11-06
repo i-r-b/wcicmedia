@@ -1,34 +1,128 @@
-.mynavbarlist{
-  padding-right: 100px;
-}
-#sidebar{
-  width: 200px;
-  border-right: 2px solid blue;
-}
-.myform{
-  width: 500px;
-  padding-bottom: 50px;
-}
-.mynav{
-  background-color:  #cccccc;
-}
-
-.stepformfield{
-  border-top: 25px;
-  width: 100%;
-}
-.stepformfield th{
-  border: solid 1px grey;
-  border-radius: 25px;
-  padding-right: 10px;
-  padding-left: 10px;
-}
-.stepformfield td{
-  border: solid 1px grey;
-  border-radius: 25px;
-  padding-right: 10px;
-  padding-left: 10px;
-}
 #recipe_form_button{
   float: right;
+}
+
+
+html,
+body {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+* {
+	text-decoration: none !important;
+}
+
+.contact-button-wrapper {
+	position: relative;
+	width: 320px;
+	height: 45px;
+	overflow: hidden;
+}
+
+.epk-button {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	width: 320px;
+	height: 45px;
+	font-family: sans-serif;
+	font-weight: 500;
+	font-size: 1em;
+	text-align: center;
+	outline: none !important;
+	box-shadow: none !important;
+	border-radius: 0;
+	cursor: pointer;
+}
+
+.zip-button {
+	width: 320px;
+	background: #007bff;
+	color: #fff;
+	border: none;
+	z-index: 510;
+  border-radius: .25rem;
+	transform-origin: 50% 50%;
+	transition: all 0.2s ease-out;
+}
+
+.zip-button:before {
+	content: "";
+	position: absolute;
+	width: 38px;
+	height: 2px;
+	background: #fff;
+	left: -38px;
+	top: 21px;
+	transition: all 0.2s ease-out;
+}
+
+/* .zip-button:hover:before {
+	left: 0;
+	transition: all 0.2s ease-out;
+} */
+
+.zip-button:after {
+	content: "";
+	position: absolute;
+	width: calc(38px + 0.25em);
+	height: 2px;
+	background: #fff;
+	right: calc(-38px - 0.25em);
+	top: 21px;
+	transition: all 0.2s ease-out;
+}
+
+/* .zip-button:hover:after {
+	right: 0;
+	transition: all 0.2s ease-out;
+} */
+
+.contact-button-wrapper.selected > .zip-button {
+	width: 0;
+	transform-origin: 50% 50%;
+	transition: all 0.2s ease-out;
+}
+
+.epk-button-half {
+	position: absolute;
+	top: 0;
+	display: inline-block;
+	overflow: hidden;
+	width: 150px;
+	height: 45px;
+	font-family: sans-serif;
+	font-weight: 500;
+	font-size: 1em;
+	text-align: center;
+	outline: none !important;
+	box-shadow: none !important;
+	border: none;
+	border-radius: .25em;
+	cursor: pointer;
+	background: #d8d8d8;
+  color: #fff;
+	z-index: 550;
+	transition: all 0.2s ease-out;
+}
+
+.epk-left {
+	left: -150px;
+  background: #ff0000;
+}
+
+.epk-right {
+	right: -150px;
+  background: #33cc33;
+}
+
+.contact-button-wrapper.selected > .epk-left {
+	left: 0;
+	transition: all 0.2s ease-out;
+}
+
+.contact-button-wrapper.selected > .epk-right {
+	right: 0;
+	transition: all 0.2s ease-out;
 }

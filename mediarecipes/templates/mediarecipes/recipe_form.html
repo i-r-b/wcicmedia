@@ -21,7 +21,7 @@
           </tr>
         </thead>
           {% for form in step_formset  %}
-          <tr class='stepformrow' scope='row'>
+          <tr id=steprow class='stepformrow' scope='row'>
               {% for field in form %}
                 <td id="td_{{ field.auto_id }}">
                   {{field}}
@@ -30,25 +30,36 @@
               {% endfor %}
           </tr>
           {% endfor %}
-          <tr id='phstep' class='trchange' >
+          <tr id='phstep' class='trchange'>
             <td><p></p>{{ phstepform.number }}</td>
             <td><span class="input-group-text" id="">Ph to:</span>{{ phstepform.ph_to }} </td>
             <td><span class="input-group-text" id="">with:</span>{{ phstepform.ingredient }}</td>
             <td><p></p>
               <span class="input-group-text" id="">pH Step</span></td>
           </tr>
-          <tr id='steristep' >
+          <tr id='steristep'>
             <td>{{ sterilizestepform.number }}</td>
             <td>{{ sterilizestepform.sterilize }}</td>
             <td><span class="input-group-text">Sterilize Step</span></td>
           </tr>
       </table>
     </div>
-    <button type="button" name="button" onclick="addRowToRecipe();">+</button>
+    <button class='btn btn-primary' type="button" name="button" onclick="addRow(steprow);">+</button>
+    <button class='btn btn-primary' type="button" id="pHbutton" onclick="addRow(phrow);">Add pH Step</button>
+    <button class='btn btn-primary' type="button" id="sterilizeButton" onclick="addRow(sterilizerow);">Add Sterilize Step</button>
     <div class="">
       <input id='recipe_form_button' class='btn btn-primary' type="submit" value="Add Recipe">
     </div>
   </form>
-  <script src="{% static '/js/popuptest.js' %}" onload="highlightErrors();"></script>
+<p></p>
+<p></p>
+<div class="contact-button-wrapper">
+	<button class="epk-button zip-button">Finalize</button>
+	<button class="epk-button-half epk-left">Make Edits</button>
+	<input id='recipe_form_button' class="epk-button-half epk-right" type=submit value='Add Recipe'>
+</div>
+
+
+  <script src="{% static '/js/recipe_page.js' %}"></script>
 
 {% endblock %}

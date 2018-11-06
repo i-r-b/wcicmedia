@@ -42,3 +42,9 @@ function highlightErrors() {
         }
     }
 };
+
+function showpHStep() {
+  var phrow = document.getElementById('phstep');
+  phrow.removeAttribute('hidden');
+  console.log('PHSTEP!');
+};

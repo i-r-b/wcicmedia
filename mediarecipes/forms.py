@@ -39,10 +39,6 @@ class phStepForm(ModelForm):
         ('3','HCl'),
     )
 
-    Ingredient = forms.CharField(
-        label='',
-        widget=forms.Select(choices=ACID_BASE_CHOICES,attrs={'class':'form-control','value':'-----',})
-    )
     class Meta:
         model = pHStep
         exclude = ['recipe']

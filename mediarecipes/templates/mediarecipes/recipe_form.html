@@ -30,14 +30,14 @@
               {% endfor %}
           </tr>
           {% endfor %}
-          <tr id='phstep' class='trchange' hidden='True'>
+          <tr id='phstep' class='trchange' >
             <td><p></p>{{ phstepform.number }}</td>
             <td><span class="input-group-text" id="">Ph to:</span>{{ phstepform.ph_to }} </td>
             <td><span class="input-group-text" id="">with:</span>{{ phstepform.ingredient }}</td>
             <td><p></p>
               <span class="input-group-text" id="">pH Step</span></td>
           </tr>
-          <tr id='steristep' hidden='true'>
+          <tr id='steristep' >
             <td>{{ sterilizestepform.number }}</td>
             <td>{{ sterilizestepform.sterilize }}</td>
             <td><span class="input-group-text">Sterilize Step</span></td>

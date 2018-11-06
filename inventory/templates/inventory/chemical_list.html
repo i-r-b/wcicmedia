@@ -1,0 +1,24 @@
+{% extends 'inventory/inventory_base.html' %}
+{% block content %}
+<h2>List of Chemical Inventory</h2>
+  <table class='table table-hover'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Catalog #</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for chemical in object_list %}
+        {% for bottle in chemical.bottle_set.all  %}
+          <tr>
+              <td><a href="{% url 'inventory:chemicaldet' slug=chemical.slug %}">{{chemical.name}}</a></td>
+              <td><a href="#">{{bottle.company}}</a></td>
+              <td>{{bottle.catalog_number}}</td>
+          </tr>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

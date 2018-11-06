@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1 id='homepage'>Welcome to the WCIC Media webpage!</h1>
+  {% if user.is_authenticated %}
+    <h2>Enjoy the site</h2>
+  {% else %}
+    <h2>Please Login or Sign Up!</h2>
+  {% endif %}
+{% endblock %}

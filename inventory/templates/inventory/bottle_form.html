@@ -1,0 +1,10 @@
+{% extends 'inventory/inventory_base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<h4>Please fill out bottle information:</h4>
+  <form class='myform' action="{% url 'inventory:createbot' %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" name="" value="create" class="btn btn-primary btn-large">
+  </form>
+{% endblock %}

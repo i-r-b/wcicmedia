@@ -1,0 +1,49 @@
+{% extends 'inventory/inventory_base.html' %}
+{% block content %}
+<h3>Additive:</h3>
+<div class="container">
+  <div class="jumbotron">
+    <h1>{{additive.bottle.chemical.name}} {{additive.concentration}}mg/ml</h1>
+    <div class="container">
+      <div class="col-md-6">
+        <h3><a href="{% url 'inventory:chemicaldet' slug=additive.bottle.chemical.slug %}">From: {{bottle.chemical.name}} {{bottle.company}}: {{bottle.catalog_number}}</a>           </h3>
+        <h3>Lot: {{additive.bottle.lot_number}}</h3>
+        <h3>Current Volume: {{additive.current_volume}}</h3>
+      </div>
+      <div class="col-md-6">
+        <h4>Opened:
+          {% if bottle.date_opened != Blank %}
+            {{additive.date_made}}</h4>
+            <h4>Made By: {{additive.made_by}}
+          {% else %}
+            False
+          {% endif %}</h4>
+          <h4>Concentration: {{additive.concentration}}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+<p></p>
+<div class="container">
+  <div class="col-md-6">
+    <h4>Other {{additive.bottle.chemical.name}} {{additive.concentration}}mg/ml Additives</h4>
+      {% for same_additive in additive.bottle.chemical.bottle_set.all %}
+        {% if same_additive.concentration == additive.concentration %}
+          <ul>
+            <li><a href="#">{{additive}}</a></li>
+          </ul>
+        {% endif %}
+      {% endfor %}
+  </div>
+  <div class="col-md-6">
+    <h4>Other additives of different concentration</h4>
+      {% for dif_additive in additive.bottle.additive_set.all  %}
+        {% if dif_additive.concentration != additive.concentration %}
+          <ul>
+            <li><a href="#">{{ additive }}</a></li>
+          </ul>
+        {% endif %}
+      {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "mediarecipes/mediarecipes_base.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block content %}
+{# {% url 'mediarecipes:newrecipe' %} #}
+  <form action="" method="POST" onload="codeAddress();">
+    {% csrf_token %}
+    {% bootstrap_form recipeform %}
+    <p></p>
+    {{ step_formset.management_form }}
+    <input id="stepformseterrors" type="hidden" name="{{ step_formset.errors }}">
+    </input>
+    <div>
+      <table id='recipe_table' class="table">
+        <thead class='thead-light'><b>Recipe Steps</b>
+          <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Ingredient</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Unit</th>
+          </tr>
+        </thead>
+          {% for form in step_formset  %}
+          <tr class='stepformrow' scope='row'>
+              {% for field in form %}
+                <td id="td_{{ field.auto_id }}">
+                  {{field}}
+                <div class="invalid-feedback">{{field.errors.as_text}}</div>
+                </td>
+              {% endfor %}
+          </tr>
+          {% endfor %}
+          <tr id='phstep' class='trchange' hidden='True'>
+            <td><p></p>{{ phstepform.number }}</td>
+            <td><span class="input-group-text" id="">Ph to:</span>{{ phstepform.ph_to }} </td>
+            <td><span class="input-group-text" id="">with:</span>{{ phstepform.ingredient }}</td>
+            <td><p></p>
+              <span class="input-group-text" id="">pH Step</span></td>
+          </tr>
+          <tr id='steristep' hidden='true'>
+            <td>{{ sterilizestepform.number }}</td>
+            <td>{{ sterilizestepform.sterilize }}</td>
+            <td><span class="input-group-text">Sterilize Step</span></td>
+          </tr>
+      </table>
+    </div>
+    <button type="button" name="button" onclick="addRowToRecipe();">+</button>
+    <div class="">
+      <input id='recipe_form_button' class='btn btn-primary' type="submit" value="Add Recipe">
+    </div>
+  </form>
+  <script src="{% static '/js/popuptest.js' %}" onload="highlightErrors();"></script>
+
+{% endblock %}

@@ -39,7 +39,7 @@ class Recipe(models.Model):
     date_created = models.DateTimeField()
     name = models.CharField(max_length=256)
     container = models.CharField(max_length=100,choices=CONTAINER_CHOICES)
-    recipe_id = models.CharField(max_length=4)
+    recipe_id = models.CharField(max_length=4,unique=True)
     comments = models.TextField()
 
     def __str__(self):

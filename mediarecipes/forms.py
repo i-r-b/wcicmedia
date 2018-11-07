@@ -49,3 +49,5 @@ class SterilizeStepForm(ModelForm):
         exclude = ['recipe']
 
 StepFormSet = formset_factory(StepForm)
+pHStepFormSet = formset_factory(phStepForm)
+SterilizeStepFormSet = formset_factory(SterilizeStepForm)

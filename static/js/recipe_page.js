@@ -32,6 +32,8 @@ function setGlobalNames() {
     ogsteprow.setAttribute('id','ogsteprow');
     bodyOfTable.removeChild(ogphsteprow);
     bodyOfTable.removeChild(ogsteristep);
+    document.getElementById('id_ph-TOTAL_FORMS').setAttribute('value',0);
+    document.getElementById('id_sterilize-TOTAL_FORMS').setAttribute('value',0);
 };
 
 function addRow(rowtype) {
@@ -42,18 +44,31 @@ function addRow(rowtype) {
     renameAndRecopyStepRow();
   } else if (rowtype.id == 'phstep') {
     document.getElementById('pHbutton').setAttribute('hidden',true);
+    document.getElementById('id_ph-TOTAL_FORMS').setAttribute('value',1);
   } else if (rowtype.id == 'steristep') {
     document.getElementById('sterilizeButton').setAttribute('hidden',true);
+    document.getElementById('id_sterilize-TOTAL_FORMS').setAttribute('value',1);
   }
 };
 
 function renameAndRecopyStepRow() {
   var ogsteprow = document.getElementById('steprow')
   steprow = ogsteprow.cloneNode(true);
-  ogsteprow.setAttribute('id','ogsteprow')
+  ogsteprow.setAttribute('id','ogsteprow');
+  var totalogs = tellMeNumberOfOgStepRows();
+  var typeList = ['-number','-ingredient','-amount','-unit'];
+  var newid = 'id_steps-'+(totalogs-1);
+  var newName = 'steps-'+(totalogs-1);
+  var children = ogsteprow.children;
+  for (var i=0; i<children.length; i++){
+    children[i].setAttribute('id','td_'+newid+typeList[i]);
+    children[i].children[0].setAttribute('id',newid+typeList[i]);
+    children[i].children[0].setAttribute('name',newName+typeList[i]);
+  }
+  document.getElementById('id_steps-TOTAL_FORMS').setAttribute('value',totalogs);
 }
 
-function changeformsetattrs() {
+function tellMeNumberOfOgStepRows() {
   var numberOfRows = document.getElementsByTagName('tr');
   var numberOfStepRows = 0
   for(var i=0; i<numberOfRows.length; i++){
@@ -61,11 +76,16 @@ function changeformsetattrs() {
       numberOfStepRows++
     }
   }
-  console.log(numberOfStepRows);
+  return(numberOfStepRows);
 }
 
+function finalizingAlert(){
+  alert('You are finalizing this project!')
+};
 
-
+function editAlert() {
+  alert('You are about to re-edit this project!')
+};
 // BUTTON script
 
 $('.zip-button').on('click', function() {

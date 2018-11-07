@@ -1,0 +1,39 @@
+{% extends "mediarecipes/mediarecipes_base.html" %}
+{% block content %}
+  <h3>Recipe</h3>
+  <div class="jumbotron">
+    <h1>{{recipe.recipe_id}}-{{recipe.name}}</h1>
+    <table class='table table-hover'>
+      <thead class='thead-light'>
+        <tr>
+          <th scope='col'>#</th>
+          <th scope='col'>Ingredient</th>
+          <th scope='col'>Amount</th>
+          <th scope='col'>Unit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for step in recipe.step_set.all  %}
+          <tr>
+            <th scope='row'>{{step.number}}</th>
+            <td>{{step.ingredient}}</td>
+            <td>{{step.amount}}</td>
+            <td>{{step.get_unit_display}}</td>
+          </tr>
+        {% endfor %}
+        {% for phstep in recipe.phstep_set.all  %}
+        <tr>
+          <th scope='row'>{{phstep.number}}</th>
+          <td>pH to {{phstep.ph_to}} with  {{phstep.get_ingredient_display}}</td>
+        </tr>
+        {% endfor %}
+        {% for sterilizestep in recipe.sterilizestep_set.all  %}
+        <tr>
+          <th scope='row'>{{sterilizestep.number}}</th>
+          <td>{{ sterilizestep.get_sterilize_display }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

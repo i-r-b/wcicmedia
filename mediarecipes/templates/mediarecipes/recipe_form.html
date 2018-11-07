@@ -8,6 +8,8 @@
     {% bootstrap_form recipeform %}
     <p></p>
     {{ step_formset.management_form }}
+    {{ phstepformset.management_form }}
+    {{ sterilizestepformset.management_form }}
     <input id="stepformseterrors" type="hidden" name="{{ step_formset.errors }}">
     </input>
     <div>
@@ -25,23 +27,26 @@
               {% for field in form %}
                 <td id="td_{{ field.auto_id }}">
                   {{field}}
-                <div class="invalid-feedback">{{field.errors.as_text}}</div>
                 </td>
               {% endfor %}
           </tr>
           {% endfor %}
+          {% for form in phstepformset %}
           <tr id='phstep' class='trchange'>
-            <td><p></p>{{ phstepform.number }}</td>
-            <td><span class="input-group-text" id="">Ph to:</span>{{ phstepform.ph_to }} </td>
-            <td><span class="input-group-text" id="">with:</span>{{ phstepform.ingredient }}</td>
+            <td><p></p>{{ form.number}}</td>
+            <td><span class="input-group-text" id="">Ph to:</span>{{ form.ph_to }} </td>
+            <td><span class="input-group-text" id="">with:</span>{{ form.ingredient }}</td>
             <td><p></p>
               <span class="input-group-text" id="">pH Step</span></td>
           </tr>
+          {% endfor %}
+          {% for form in sterilizestepformset  %}
           <tr id='steristep'>
-            <td>{{ sterilizestepform.number }}</td>
-            <td>{{ sterilizestepform.sterilize }}</td>
+            <td>{{ form.number }}</td>
+            <td>{{ form.sterilize }}</td>
             <td><span class="input-group-text">Sterilize Step</span></td>
           </tr>
+          {% endfor %}
       </table>
     </div>
     <button class='btn btn-primary' type="button" name="button" onclick="addRow(steprow);">+</button>
@@ -54,8 +59,8 @@
 <p></p>
 <p></p>
 <div class="contact-button-wrapper">
-	<button class="epk-button zip-button">Finalize</button>
-	<button class="epk-button-half epk-left">Make Edits</button>
+	<button class="epk-button zip-button" onclick="finalizingAlert();">Finalize</button>
+	<button class="epk-button-half epk-left" onclick="editAlert();">Make Edits</button>
 	<input id='recipe_form_button' class="epk-button-half epk-right" type=submit value='Add Recipe'>
 </div>
 

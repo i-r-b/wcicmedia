@@ -1,0 +1,24 @@
+{% extends "mediarecipes/mediarecipes_base.html" %}
+{% block content %}
+<h1>Media Recipes</h1>
+<table class='table table-hover'>
+  <thead class='thead-light'>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Recipe Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for recipe in object_list  %}
+      <tr><a href="{% url 'mediarecipes:mediarecipeshome' %}"></a>
+        <td>{{recipe.recipe_id}}</td>
+        <td>{{recipe.name}}</td>
+        <td>{{recipe.comments}}</td>
+        <td><a href="{% url 'mediarecipes:recipedet' pk=recipe.pk %}">Details</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

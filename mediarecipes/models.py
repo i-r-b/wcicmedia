@@ -78,6 +78,7 @@ class Request(models.Model):
     def __str__(self):
         return 'REQ'+str(self.pk)
 
+
 class Step(models.Model):
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
     number = models.IntegerField()

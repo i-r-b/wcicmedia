@@ -22,7 +22,7 @@ class Chemical(models.Model):
         super().save(*args,**kwargs)
 
     def get_absolute_url(self):
-        return reverse('inventory:chemicaldet',args=[self.name])
+        return reverse('inventory:chemicaldet',args=[self.slug])
 
     class Meta:
         ordering = ['name']

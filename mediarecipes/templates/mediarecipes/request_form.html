@@ -1,0 +1,9 @@
+{% extends "mediarecipes/mediarecipes_base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+<form class="" action="" method="post">
+  {% csrf_token %}
+  {% bootstrap_form requestform %}
+  <input type="submit" name="" value="Place Request">
+</form>
+{% endblock %}

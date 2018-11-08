@@ -48,6 +48,12 @@ class SterilizeStepForm(ModelForm):
         model = SterilizeStep
         exclude = ['recipe']
 
+class RequestForm(ModelForm):
+    class Meta:
+        model = Request
+        fields = ['media_recipe','volume','number_requested','date_needed','initial_comments']
+
+
 StepFormSet = formset_factory(StepForm)
 pHStepFormSet = formset_factory(phStepForm)
 SterilizeStepFormSet = formset_factory(SterilizeStepForm)

@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView,CreateView,View, ListView,DetailView
 from django.http import HttpResponseRedirect,QueryDict
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import formset_factory
-from .forms import RecipeForm, StepForm, StepFormSet, pHStepFormSet, SterilizeStepFormSet
-from .models import Recipe, Step, pHStep, SterilizeStep
+from .forms import RecipeForm, StepForm, StepFormSet, pHStepFormSet, SterilizeStepFormSet, RequestForm
+from .models import Recipe, Step, pHStep, SterilizeStep, Request
 from inventory.models import Chemical
 import datetime
 
@@ -18,7 +19,6 @@ class RecipeCreateView(LoginRequiredMixin,View):
     login_url = '/accounts/login/'
     template_name = 'mediarecipes/recipe_form.html'
     model = Recipe
-    success_url = '/mediarecipes/'
 
     def get(self,request):
         recipeform = RecipeForm()
@@ -73,5 +73,33 @@ class RecipeCreateView(LoginRequiredMixin,View):
 class MediaRecipeListView(ListView):
     model = Recipe
 
+class QueueListView(ListView):
+    template_name = 'mediarecipes/queue.html'
+    model = Request
+
 class RecipeDetailView(DetailView):
     model = Recipe
+
+class RequestFormView(View):
+    model = Request
+    success_url = '/mediarecipes/queue/'
+
+    def get(self,request):
+        requestform = RequestForm()
+        return render(request,'mediarecipes/request_form.html',{'requestform':requestform,})
+
+    def post(self,request):
+        requestform = RequestForm(request.POST)
+        if requestform.is_valid():
+            new_request = Request()
+            new_request.media_recipe = requestform.cleaned_data['media_recipe']
+            new_request.volume = requestform.cleaned_data['volume']
+            new_request.number_requested = requestform.cleaned_data['number_requested']
+            new_request.requested_by = request.user
+            new_request.date_requested = datetime.datetime.now()
+            new_request.date_needed = requestform.cleaned_data['date_needed']
+            new_request.initial_comments = requestform.cleaned_data['initial_comments']
+            new_request.save()
+            return HttpResponseRedirect('/mediarecipes/queue/')
+        else:
+            return render(request,'mediarecipes/request_form.html',{'requestform':requestform,})

@@ -22,12 +22,12 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class='navbar-nav'>
           {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="">Queue</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:queue' %}">Queue</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'inventory:inventoryhome' %}">Inventory</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:mediarecipeshome' %}">Recipes</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Log Out</a></li>
           {% else %}
-            <li class="nav-item"><a class="nav-link" href="">Queue</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:queue' %}">Queue</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a></li>
           {% endif %}

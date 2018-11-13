@@ -3,43 +3,49 @@
 <h3>Bottle:</h3>
 <div class="container">
   <div class="jumbotron">
-    <h1>{{bottle.chemical.name}}</h1>
+    <h1>{{bottle}}</h1>
     <div class="container">
-      <div class="col-md-6">
-        <h3><a href="{% url 'inventory:chemicaldet' slug=bottle.chemical.slug %}">{{bottle.chemical.name}} {{bottle.company}}: {{bottle.catalog_number}}</a>           </h3>
-        <h3>Lot: {{bottle.lot_number}}</h3>
-        <h3>Current Volume: {{bottle.current_volume}}</h3>
-      </div>
-      <div class="col-md-6">
-        <h4>Opened:
-          {% if bottle.date_opened != Blank %}
-            {{bottle.date_opened}}</h4>
-            <h4>Opened By: {{bottle.opened_by}}
-          {% else %}
-            False
-          {% endif %}</h4>
-          <h4>Expiration: {{bottle.expiration}}</h4>
-      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h3><a href="{% url 'inventory:chemicaldet' slug=bottle.chemical.slug %}">{{bottle.chemical.name}} {{bottle.company}}: {{bottle.catalog_number}}</a>           </h3>
+          <h3>Lot: {{bottle.lot_number}}</h3>
+          <h3>Current Volume: {{bottle.current_volume}}</h3>
+        </div>
+        <div class="col-md-6">
+          <h4>Opened:
+            {% if bottle.date_opened != Blank %}
+              {{bottle.date_opened}}</h4>
+              <h4>Opened By: {{bottle.opened_by}}
+            {% else %}
+              <a href="{% url 'inventory:openbottle' pk=bottle.pk %}">False</a>
+            {% endif %}</h4>
+            <h4>Expiration: {{bottle.expiration}}</h4>
+        </div>
+    </div>
     </div>
   </div>
 </div>
 <p></p>
 <div class="container">
-  <div class="col-md-6">
-    <h2>Other {{bottle.company}}:{{bottle.catalog_number}} Bottles</h2>
-      {% for bottle in bottle.chemical.bottle_set.all %}
-        <ul>
-          <li><a href="#">{{bottle}}</a></li>
-        </ul>
-      {% endfor %}
-  </div>
-  <div class="col-md-6">
-    <h2>Additives made from this bottle:</h2>
-      {% for additive in bottle.additive_set.all  %}
-        <ul>
-          <li><a href="{% url 'inventory:additivedet' pk=additive.pk %}">{{ additive }}</a></li>
-        </ul>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Other {{bottle.company}}:{{bottle.catalog_number}} Bottles</h2>
+        {% for otherbottle in bottle.chemical.bottle_set.all %}
+          {% if otherbottle != bottle %}
+          <ul>
+            <li><a href="#">{{otherbottle}}</a></li>
+          </ul>
+          {% endif %}
         {% endfor %}
+    </div>
+    <div class="col-md-6">
+      <h2>Additives made from this bottle:</h2>
+        {% for additive in bottle.additive_set.all  %}
+          <ul>
+            <li><a href="{% url 'inventory:additivedet' pk=additive.pk %}">{{ additive }}</a></li>
+          </ul>
+          {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

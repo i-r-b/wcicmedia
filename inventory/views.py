@@ -34,16 +34,18 @@ class CreateAdditive(LoginRequiredMixin,generic.CreateView):
         self.object.save()
         return super().form_valid(form)
 
-# class OpenBottle(LoginRequiredMixin,generic.UpdateView):
-#     fields = ('opened')
-#     model = Bottle
-#     template_name = 'bottle_open_form.html'
-#
-#     def form_valid(self,form):
-#         self.object = form.save(commit=False)
-#         self.object.opened_by = self.request.user
-#         self.object.save()
-#         return super().form_valid(form)
+class OpenBottle(LoginRequiredMixin,generic.UpdateView):
+    fields = ('date_opened',)
+    model = Bottle
+    template_name = 'inventory/bottle_open_form.html'
+
+    def form_valid(self,form):
+        self.object = form.save(commit=False)
+        self.object.opened_by = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
 class ChemicalDetail(LoginRequiredMixin,generic.DetailView):
     model = Chemical
 

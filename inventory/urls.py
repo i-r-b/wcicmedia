@@ -11,4 +11,5 @@ urlpatterns = [
     path('chemical/<slug>',views.ChemicalDetail.as_view(),name='chemicaldet'),
     path('bottle/<int:pk>',views.BottleDetail.as_view(),name='bottledet'),
     path('additive/<int:pk>',views.AdditiveDetail.as_view(),name='additivedet'),
+    path('bottle/<int:pk>/open',views.OpenBottle.as_view(),name='openbottle'),
 ]

@@ -2,16 +2,27 @@
 {% block content %}
 <h3>Chemical:</h3>
 <div class="jumbotron">
-  <h1>{{chemical.name}}</h1>
-  <h3>This could be a small list of all company and lot numbers we use?         </h3>
-  <h3>Atomic Weight: {{chemical.atomic_weight}}</h3>
-  <h3>CAS Number: {{chemical.cas_number}}</h3>
+  <h1 class='display-4'>{{chemical.name}}</h1>
+  <hr class="my-4">
+    <div class="row">
+      <div class="col-md">
+        <h3>Atomic Weight: <span class="badge badge-primary badge-pill">{{chemical.atomic_weight}}</span></h3>
+        <h3>CAS Number: <span class="badge badge-primary badge-pill">{{chemical.cas_number}}</span></h3>
+      </div>
+    <div class="col-md">
+      <h3>Bottle Catalog IDs</h3>
+        <p>{{catalognumbers}}</p>
+        {% for bottle in uniquecatnums %}
+          <p>{{bottle.company}}  {{bottle.catalog_number}}</p>
+        {% endfor %}
+    </div>
+  </div>
 </div>
 <div class="container">
   <div class="row">
     <div class="col-md">
       <h2>Purchased Reagent Bottles</h2>
-        {% for bottle in chemical.bottle_set.all %}
+        {% for bottle in bottle_list %}
           <ul>
             <li><a href="{% url 'inventory:bottledet' pk=bottle.pk %}">{{bottle}}</a></li>
           </ul>

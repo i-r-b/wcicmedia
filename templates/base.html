@@ -24,7 +24,7 @@
           {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:queue' %}">Queue</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'inventory:inventoryhome' %}">Inventory</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:mediarecipeshome' %}">Recipes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:recipelist' %}">Recipes</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Log Out</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'mediarecipes:queue' %}">Queue</a></li>

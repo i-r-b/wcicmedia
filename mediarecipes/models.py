@@ -82,17 +82,15 @@ class Request(models.Model):
 class Step(models.Model):
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
     number = models.IntegerField()
+
+class ReagentStep(Step):
     ingredient = models.ForeignKey(Chemical,on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10,decimal_places=3)
     unit = models.TextField(choices=UNIT_CHOICES)
 
-class pHStep(models.Model):
-    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
-    number = models.IntegerField()
+class pHStep(Step):
     ingredient = models.TextField(choices=ACID_BASE_CHOICES)
     ph_to = models.DecimalField(max_digits=4, decimal_places=2)
 
-class SterilizeStep(models.Model):
-    recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
-    number = models.IntegerField()
+class SterilizeStep(Step):
     sterilize = models.TextField(choices=(('1','Autoclave for 25 minutes'),('2','Filter Sterilize')))

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Recipe, Request, Step, pHStep, SterilizeStep
+from .models import Recipe, Request, Step, pHStep, SterilizeStep, ReagentStep
 from django.contrib.auth import get_user_model
 from django.forms import formset_factory
 from django.forms.models import ModelForm
@@ -28,7 +28,7 @@ class RecipeForm(forms.Form):
 class StepForm(ModelForm):
 
     class Meta:
-        model = Step
+        model = ReagentStep
         exclude = ['recipe']
 
 class phStepForm(ModelForm):

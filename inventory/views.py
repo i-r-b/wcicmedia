@@ -47,16 +47,36 @@ class OpenBottle(LoginRequiredMixin,generic.UpdateView):
 
 
 class ChemicalDetail(LoginRequiredMixin,generic.DetailView):
+
     model = Chemical
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['bottle_list'] = Bottle.objects.filter(chemical=context['chemical'])
+        context['uniquecatnums'] = Bottle.objects.filter(chemical=context['chemical']).values("company",'catalog_number').distinct()
+        return context
 
 class BottleDetail(LoginRequiredMixin,generic.DetailView):
     model = Bottle
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['same_bottle_type'] = Bottle.objects.filter(catalog_number=context['bottle'].catalog_number)
+        context['allbottles'] = Bottle.objects.filter(chemical=context['bottle'].chemical).exclude(catalog_number=context['bottle'].catalog_number)
+        return context
 
 class AdditiveDetail(LoginRequiredMixin,generic.DetailView):
     model = Additive
 
 class InventoryList(LoginRequiredMixin,generic.ListView):
-    model = models.Chemical
+    model = Chemical
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['uniquecatnums'] = Bottle.objects.values("company",'catalog_number').distinct()
+        return context
+
+
 
 class InventoryHome(LoginRequiredMixin,generic.TemplateView):
     template_name = 'inventory/inventory_base.html'

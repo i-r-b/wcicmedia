@@ -2,7 +2,14 @@
 {% block content %}
   <h3>Recipe</h3>
   <div class="jumbotron">
-    <h1>{{recipe.recipe_id}}-{{recipe.name}}</h1>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <h1>{{recipe.recipe_id}}-{{recipe.name}}</h1>
+      </div>
+      <div class="col-6 col-md-4">
+        <p class="text-muted">all recipes based on 1000 ml</p>
+      </div>
+    </div>
     <table class='table table-hover'>
       <thead class='thead-light'>
         <tr>
@@ -13,25 +20,19 @@
         </tr>
       </thead>
       <tbody>
-        {% for step in recipe.step_set.all  %}
+        {% for step in orderedsteps %}
           <tr>
             <th scope='row'>{{step.number}}</th>
-            <td>{{step.ingredient}}</td>
-            <td>{{step.amount}}</td>
-            <td>{{step.get_unit_display}}</td>
+            {% if step.reagentstep %}
+            <td>{{step.reagentstep.ingredient}}</td>
+            <td>{{step.reagentstep.amount}}</td>
+            <td>{{step.reagentstep.get_unit_display}}</td>
+            {% elif step.phstep %}
+            <td>pH to {{step.phstep.ph_to}} with  {{step.phstep.get_ingredient_display}}</td>
+            {% elif step.sterilizestep %}
+            <td>{{ step.sterilizestep.get_sterilize_display }}</td>
+            {% endif %}
           </tr>
-        {% endfor %}
-        {% for phstep in recipe.phstep_set.all  %}
-        <tr>
-          <th scope='row'>{{phstep.number}}</th>
-          <td>pH to {{phstep.ph_to}} with  {{phstep.get_ingredient_display}}</td>
-        </tr>
-        {% endfor %}
-        {% for sterilizestep in recipe.sterilizestep_set.all  %}
-        <tr>
-          <th scope='row'>{{sterilizestep.number}}</th>
-          <td>{{ sterilizestep.get_sterilize_display }}</td>
-        </tr>
         {% endfor %}
       </tbody>
     </table>

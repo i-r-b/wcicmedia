@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Recipe, Request, Step, pHStep, SterilizeStep
+from .models import Recipe, Request, Step, pHStep, SterilizeStep, ReagentStep
 # Register your models here.
 
-class StepInLine(admin.TabularInline):
-    model = Step
+class ReagentStepInLine(admin.TabularInline):
+    model = ReagentStep
 
 class pHStepInLine(admin.TabularInline):
     model = pHStep
@@ -13,7 +13,7 @@ class SterilizeStepInLine(admin.TabularInline):
 
 class RecipeAdmin(admin.ModelAdmin):
     inlines = [
-        StepInLine,
+        ReagentStepInLine,
         pHStepInLine,
         SterilizeStepInLine,
     ]
@@ -23,3 +23,4 @@ admin.site.register(Request)
 admin.site.register(Step)
 admin.site.register(pHStep)
 admin.site.register(SterilizeStep)
+admin.site.register(ReagentStep)

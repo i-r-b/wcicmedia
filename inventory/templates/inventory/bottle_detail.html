@@ -3,13 +3,24 @@
 <h3>Bottle:</h3>
 <div class="container">
   <div class="jumbotron">
-    <h1>{{bottle}}</h1>
+    <div class="row">
+      {% if bottle.date_opened == Blank %}
+      <div class="col-md-10"><h1 class='display-4'>{{bottle}}</h1><hr class="my-4"></div>
+      <div class="col-md-2"><button class="btn btn-primary" type="button" name="button">Open</button></div>
+      {% else %}
+      <div class="">
+        <h1 class='display-4'>{{bottle}}</h1>
+        <hr class="my-4">
+      </div>
+      {% endif %}
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <h3><a href="{% url 'inventory:chemicaldet' slug=bottle.chemical.slug %}">{{bottle.chemical.name}} {{bottle.company}}: {{bottle.catalog_number}}</a>           </h3>
-          <h3>Lot: {{bottle.lot_number}}</h3>
-          <h3>Current Volume: {{bottle.current_volume}}</h3>
+          <h3><a href="{% url 'inventory:chemicaldet' slug=bottle.chemical.slug %}">{{bottle.chemical.name}}</a></h3>
+          <h3>Manufacturer:  <span class="badge badge-primary badge-pill">{{bottle.company}} {{bottle.catalog_number}}</span></h3>
+          <h3>Lot: <span class="badge badge-primary badge-pill">{{bottle.lot_number}}</span></h3>
+          <h3>Current Volume: <span class="badge badge-primary badge-pill">{{bottle.current_volume}}</span></h3>
         </div>
         <div class="col-md-6">
           <h4>Opened:
@@ -21,7 +32,7 @@
             {% endif %}</h4>
             <h4>Expiration: {{bottle.expiration}}</h4>
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </div>
@@ -30,10 +41,10 @@
   <div class="row">
     <div class="col-md-6">
       <h2>Other {{bottle.company}}:{{bottle.catalog_number}} Bottles</h2>
-        {% for otherbottle in bottle.chemical.bottle_set.all %}
-          {% if otherbottle != bottle %}
+        {% for similarbottle in same_bottle_type %}
+          {% if similarbottle != bottle %}
           <ul>
-            <li><a href="#">{{otherbottle}}</a></li>
+            <li><a href="{% url 'inventory:bottledet' pk=similarbottle.pk %}">{{similarbottle}}</a></li>
           </ul>
           {% endif %}
         {% endfor %}
@@ -45,6 +56,16 @@
             <li><a href="{% url 'inventory:additivedet' pk=additive.pk %}">{{ additive }}</a></li>
           </ul>
           {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg">
+      <h2>Different Catalog Number Bottles</h2>
+        {% for otherbottle in allbottles  %}
+        <ul>
+          <li><a href="{% url 'inventory:bottledet' pk=otherbottle.pk %}">{{otherbottle}}</a></li>
+        </ul>
+        {% endfor %}
     </div>
   </div>
 </div>

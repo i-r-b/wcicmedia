@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect,QueryDict
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import formset_factory
 from .forms import RecipeForm, StepForm, StepFormSet, pHStepFormSet, SterilizeStepFormSet, RequestForm
-from .models import Recipe, Step, pHStep, SterilizeStep, Request
+from .models import Recipe, Step, pHStep, SterilizeStep, Request, ReagentStep
 from inventory.models import Chemical
 import datetime
 
@@ -46,7 +46,7 @@ class RecipeCreateView(LoginRequiredMixin,View):
             new_recipe.date_created = datetime.datetime.now()
             new_recipe.save()
             for form in step_formset:
-                new_step = Step()
+                new_step = ReagentStep()
                 new_step.recipe = new_recipe
                 new_step.number = form.cleaned_data['number']
                 new_step.ingredient = form.cleaned_data['ingredient']
@@ -79,6 +79,11 @@ class QueueListView(ListView):
 
 class RecipeDetailView(DetailView):
     model = Recipe
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orderedsteps'] = Step.objects.filter(recipe=context['object']).order_by('number')
+        return context
 
 class RequestFormView(View):
     model = Request

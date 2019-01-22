@@ -85,6 +85,14 @@ class RecipeDetailView(DetailView):
         context['orderedsteps'] = Step.objects.filter(recipe=context['object']).order_by('number')
         return context
 
+class RequestDetailView(DetailView):
+    model = Request
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orderedsteps'] = Step.objects.filter(recipe=context['object'].media_recipe).order_by('number')
+        return context
+
 class RequestFormView(View):
     model = Request
     success_url = '/mediarecipes/queue/'

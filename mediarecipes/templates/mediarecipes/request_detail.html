@@ -1,0 +1,39 @@
+{% extends "mediarecipes/mediarecipes_base.html" %}
+{% block content %}
+  <h1>Here are request {{request.pk}}'s details.</h1>
+  <h4>{{request.media_recipe}}</h4>
+  <h4>{{request.volume}}</h4>
+  <h4>{{request.number_requested}}</h4>
+  <h4>{{request.date_needed}}</h4>
+  <h4>{{request.requested_by}}</h4>
+  <h4>{{request.date_requested}}</h4>
+  <h4>{{request.initial_comments}}</h4>
+  <div class="card" style="width: 20rem;">
+  <table class='table table-hover'>
+    <thead class='thead-light'>
+      <tr>
+        <th scope='col'>#</th>
+        <th scope='col'>Ingredient</th>
+        <th scope='col'>Amount</th>
+        <th scope='col'>Unit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for step in orderedsteps %}
+        <tr>
+          <th scope='row'>{{step.number}}</th>
+          {% if step.reagentstep %}
+          <td>{{step.reagentstep.ingredient}}</td>
+          <td>{{step.reagentstep.amount}}</td>
+          <td>{{step.reagentstep.get_unit_display}}</td>
+          {% elif step.phstep %}
+          <td colspan="3">pH to {{step.phstep.ph_to}} with  {{step.phstep.get_ingredient_display}}</td>
+          {% elif step.sterilizestep %}
+          <td colspan="3">{{ step.sterilizestep.get_sterilize_display }}</td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table><button type="button" name="begin">Start Recipe</button>
+  </div>
+{% endblock %}

@@ -15,7 +15,7 @@
   <tbody>
     {% for request in object_list  %}
       <tr>
-        <td><a href="">REQ{{request.pk}}</a></td>
+        <td><a href="{% url 'mediarecipes:requestdet' pk=request.pk %}">REQ{{request.pk}}</a></td>
         <td>{{request.media_recipe}}</td>
         <td>{{request.volume}}</td>
         <td>{{request.number_requested}}</td>

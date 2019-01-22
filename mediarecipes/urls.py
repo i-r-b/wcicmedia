@@ -10,4 +10,5 @@ urlpatterns = [
     path('allrecipes/<pk>',views.RecipeDetailView.as_view(),name='recipedet'),
     path('reciperequest/',views.RequestFormView.as_view(),name='request'),
     path('queue/',views.QueueListView.as_view(),name='queue'),
+    path('queue/request/<pk>',views.RequestDetailView.as_view(),name='requestdet'),
 ]

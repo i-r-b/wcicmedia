@@ -6,7 +6,7 @@ from django.forms import ModelForm
 
 
 from django.contrib.auth import get_user_model
-from inventory.models import Chemical
+from inventory.models import Chemical, Bottle, Additive
 User = get_user_model()
 
 CONTAINER_CHOICES =(
@@ -33,6 +33,12 @@ ACID_BASE_CHOICES =(
     ('3','HCl'),
 )
 
+REQUEST_STATUS_CHOICES =(
+    ('1','Queued'),
+    ('2', 'Started'),
+    ('3', 'Complete'),
+    ('4','Canceled'),
+)
 
 class Recipe(models.Model):
     created_by = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -57,6 +63,7 @@ class Request(models.Model):
     date_requested = models.DateTimeField()
     date_needed = models.DateField()
     initial_comments = models.TextField(max_length=180)
+    status = models.CharField(max_length=100,choices=REQUEST_STATUS_CHOICES)
     completed = models.BooleanField(default=False)
     cancelled_by = models.ForeignKey(User,related_name='cancelled_by_user',on_delete=models.CASCADE,null=True,blank=True)
     date_cancelled = models.DateTimeField(null=True,blank=True)
@@ -78,6 +85,11 @@ class Request(models.Model):
     def __str__(self):
         return 'REQ'+str(self.pk)
 
+class FinalStep(models.Model):
+    request = models.ForeignKey(Request, on_delete=models.CASCADE)
+    number = models.IntegerField()
+    additive = models.ForeignKey(Additive, on_delete=models.CASCADE)
+    bottle = models.ForeignKey(Bottle, on_delete=models.CASCADE)
 
 class Step(models.Model):
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)

@@ -6,7 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import formset_factory
 from .forms import RecipeForm, StepForm, StepFormSet, pHStepFormSet, SterilizeStepFormSet, RequestForm
 from .models import Recipe, Step, pHStep, SterilizeStep, Request, ReagentStep
-from inventory.models import Chemical
+from inventory.models import Chemical,Bottle, Additive
+from itertools import chain
 import datetime
 
 
@@ -91,6 +92,12 @@ class RequestDetailView(DetailView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['orderedsteps'] = Step.objects.filter(recipe=context['object'].media_recipe).order_by('number')
+        mybottlelist = Bottle.objects.exclude(opened_by__isnull=True)
+        myadditivelist = Additive.objects.all()
+        # myfilteredlist = chain(mybottlelist, myadditivelist)
+        # print(myfilteredlist)
+        context['mybottlelist'] = mybottlelist
+        context['myadditivelist'] = myadditivelist
         return context
 
 class RequestFormView(View):

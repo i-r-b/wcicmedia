@@ -18,6 +18,7 @@
         <th scope='col'>Ingredient</th>
         <th scope='col'>Amount</th>
         <th scope='col'>Unit</th>
+        <th class='selectreagent' hidden scope='col'>Bottle</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +29,7 @@
           <td>{{step.reagentstep.ingredient}}</td>
           <td>{{step.reagentstep.amount}}</td>
           <td>{{step.reagentstep.get_unit_display}}</td>
-          <td><select>
+          <td class='selectreagent' hidden=True><select>
             <option selected>-----</option>
             {% for thing in mybottlelist %}
               {% if thing.chemical == step.reagentstep.ingredient %}
@@ -43,13 +44,27 @@
           </select></td>
           {% elif step.phstep %}
           <td colspan="3">pH to {{step.phstep.ph_to}} with  {{step.phstep.get_ingredient_display}}</td>
+          <td class='selectreagent' hidden=True><select>
+            <option selected>-----</option>
+            {% for thing in mybottlelist %}
+              {% if thing.chemical == step.phstep.get_ingredient_display %}
+              <option>{{thing}}</option>
+              {% endif %}
+            {%endfor%}
+            {% for thing in myadditivelist %}
+              {% if thing.bottle.chemical == step.phstep.get_ingredient_display %}
+              <option>{{thing}}</option>
+              {% endif %}
+            {%endfor%}
+          </select></td>
           {% elif step.sterilizestep %}
           <td colspan="3">{{ step.sterilizestep.get_sterilize_display }}</td>
           {% endif %}
         </tr>
       {% endfor %}
     </tbody>
-  </table><button id='startbutton' type="button" name="begin" onclick="swapStatus();">Start Recipe</button>
+  </table>
+  <button id='startbutton' type="button" name="begin" onclick="swapStatus();">Start Recipe</button>
   </div>
 
   <script src="{% static '/js/request_page.js' %}"></script>
